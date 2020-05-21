@@ -87,7 +87,7 @@ def verify_decode_jwt(token):
                 rsa_key,
                 algorithms=ALGORITHMS,
                 audience=API_AUDIENCE,
-                issuer='https'+AUTH0_DOMAIN+'/'
+                issuer='https://'+AUTH0_DOMAIN+'/'
             )
         except jwt.ExpiredSignatureError:
             raise AuthError({
@@ -108,10 +108,11 @@ def verify_decode_jwt(token):
 
         _request_ctx_stack.top.current_user = payload
 
-    raise AuthError({
-        'code': 'invalid_header',
-        'description': 'Unable to find appropriate key'
-    }, 401)
+    else:
+        raise AuthError({
+            'code': 'invalid_header',
+            'description': 'Unable to find appropriate key'
+        }, 401)
 
 
 def requires_auth(permission=''):
